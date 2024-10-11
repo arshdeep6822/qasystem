@@ -2,6 +2,13 @@ from llama_index.core import SimpleDirectoryReader
 import sys
 from exception import customexception
 from logger import logging
+import tempfile
+
+def save_uploaded_file(uploaded_file):
+    with tempfile.NamedTemporaryFile(delete=False, suffix=".txt") as temp_file:
+        temp_file.write(uploaded_file.read())
+        return temp_file.name
+
 
 def load_data(data):
     """
@@ -15,7 +22,7 @@ def load_data(data):
     """
     try:
         logging.info("data loading started...")
-        loader = SimpleDirectoryReader("../Data")
+        loader = SimpleDirectoryReader(str(data))
         documents=loader.load_data()
         logging.info("data loading completed...")
         return documents

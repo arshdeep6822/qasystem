@@ -1,5 +1,5 @@
 import streamlit as st
-from QAWithPDF.data_ingestion import load_data
+from QAWithPDF.data_ingestion import load_data, save_uploaded_file
 from QAWithPDF.embedding import download_gemini_embedding
 from QAWithPDF.model_api import load_model
 
@@ -15,7 +15,8 @@ def main():
     
     if st.button("submit & process"):
         with st.spinner("Processing..."):
-            document=load_data(doc)
+            file_path = save_uploaded_file(doc)
+            document=load_data(file_path)
             model=load_model()
             query_engine=download_gemini_embedding(model,document)
                 
